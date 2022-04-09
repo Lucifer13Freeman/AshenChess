@@ -1,3 +1,16 @@
+# ReactChess
+
+A simple chess game
+
+Stack: 
+
+* TypeScript
+* React.js
+* RxJS
+* chess.js
+* react-dnd
+* SCSS
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

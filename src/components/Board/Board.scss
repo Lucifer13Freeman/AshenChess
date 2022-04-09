@@ -1,0 +1,63 @@
+
+.board_container
+{
+    width: 600px;
+    height: 600px;
+}
+
+.board 
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .board_square
+    {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.square
+{
+    width: 12.5%;
+    height: 12.5%;
+
+    .square_black
+    {
+        background-color: chocolate;
+    }
+
+    .square_white
+    {
+        background-color: burlywood;
+    }
+}
+
+.promote_square
+{
+    width: 50%;
+    height: 50%;
+}
+
+.cursor_pointer
+{
+    cursor: pointer;
+}
+
+.piece_container
+{
+    cursor: grab;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.piece_img
+{
+    max-width: 70%;
+    max-height: 70%;
+}
