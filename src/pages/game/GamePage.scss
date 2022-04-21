@@ -1,0 +1,10 @@
+@layer components {
+  .game_page {
+    @apply
+      min-h-screen
+      flex
+      items-center
+      justify-center
+      bg-slate-800
+  }
+}

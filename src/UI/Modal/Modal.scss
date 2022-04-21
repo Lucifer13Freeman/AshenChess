@@ -1,0 +1,65 @@
+@layer components {
+    .modal_showed {
+        @apply
+            bg-slate-900 
+            flex 
+            bg-opacity-60 
+            overflow-y-auto 
+            overflow-x-hidden 
+            fixed 
+            right-0 
+            left-0 
+            top-0 
+            bottom-0 
+            z-50 
+            justify-center 
+            items-center 
+            md:h-full 
+            md:inset-0;
+    }
+
+    .modal_title {
+        @apply
+            text-xl 
+            font-semibold 
+            text-slate-900 
+            lg:text-2xl
+    }
+
+    .modal_close_btn
+    {
+        @apply
+            text-slate-400 
+            bg-transparent 
+            hover:bg-slate-200 
+            hover:text-slate-900 
+            rounded-lg 
+            text-sm 
+            p-1.5 
+            ml-auto 
+            inline-flex 
+            items-center 
+    }
+
+    .modal_header {
+        @apply 
+            px-5 
+            py-2.5 
+            rounded-md 
+            text-sm 
+            text-slate-700 
+            border 
+            hover:bg-slate-50;
+    }
+
+    .modal_footer {
+        @apply 
+            flex
+            justify-end 
+            items-center 
+            px-6 
+            pb-6 
+            space-x-2 
+            rounded-b;
+    }
+}

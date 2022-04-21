@@ -1,29 +1,117 @@
 import { Chess, Move, ShortMove } from 'chess.js';
-import { BehaviorSubject } from 'rxjs';
+import { DocumentData, DocumentSnapshot, getDoc, updateDoc } from 'firebase/firestore';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { auth } from '../firebase/firebase';
 import { IGame, 
         MovePromotionType, 
         PLAYERS, 
         DEFAULT, 
         PromotionType, 
         RESULTS, 
-        SquareType } from './types';
+        SquareType, 
+        IGameDoc, 
+        GameDocRefType,
+        IMember } from './types';
+import { fromRef } from 'rxfire/firestore';
 
+
+let gameRef: GameDocRefType | null;
+let member: IMember;
 
 const chess = new Chess(DEFAULT);
 
-export const gameSubject: BehaviorSubject<IGame> = new BehaviorSubject({});
 
-export const initGame = () =>
+export let gameSubject: Observable<IGameDoc | IGame> | BehaviorSubject<IGameDoc | IGame>;
+
+export const initGame = async (docRef: GameDocRefType | null) =>
 {
-    const savedGame = localStorage.getItem('SAVEDGAME');
-    if (savedGame) chess.load(savedGame);
-    updateGame();
+    const { currentUser } = auth;
+
+    if (docRef !== null) 
+    {
+        gameRef = docRef;
+
+        const gameSnap = await getDoc(gameRef);
+
+        const initialGame = await gameSnap.data();
+
+        if (!initialGame || !currentUser) return 'notfound';
+
+        const creator = initialGame.members.find((m: IMember) => m.creator === true);
+
+        if (initialGame.status === 'waiting' 
+            && creator.uid !== currentUser.uid) 
+        {
+            const currUser = {
+                uid: currentUser.uid,
+                name: localStorage.getItem('USERNAME'),
+                piece: creator.piece === 'w' ? 'b' : 'w'
+            }
+
+            const updatedMembers = [...initialGame.members, currUser];
+
+            await updateDoc(gameRef, { members: updatedMembers, status: 'ready' });
+        } 
+        else if (!initialGame.members
+                    .map((m: IMember) => m.uid)
+                    .includes(currentUser.uid) 
+                && initialGame.members.length > 1) return 'intruder';
+
+        chess.reset();
+
+        gameSubject = fromRef(gameRef).pipe(
+            map((gameDoc: DocumentSnapshot<IGameDoc | DocumentData>) => 
+            {
+                const game = gameDoc.data();
+
+                if (!game) return {};
+                
+                const { pendingPromotion, gameData, ...restOfGame } = game;
+                
+                member = game.members.find((m: IMember) => m.uid === currentUser.uid);
+                
+                const oponent = game.members.find((m: IMember) => m.uid !== currentUser.uid);
+                
+                if (gameData) chess.load(gameData);
+
+                const isGameOver = chess.game_over();
+
+                return {
+                    ...restOfGame,
+                    board: chess.board(),
+                    pendingPromotion,
+                    isGameOver,
+                    position: member.piece,
+                    member,
+                    oponent,
+                    result: isGameOver ? getGameResult() : null,
+                }
+            })
+        );
+    }
+    else 
+    {
+        gameRef = null;
+        gameSubject = new BehaviorSubject({});
+
+        const savedGame = localStorage.getItem('SAVEDGAME');
+        if (savedGame) chess.load(savedGame);
+        updateGame();
+    }
 }
 
-export const resetGame = () =>
+export const resetGame = async () =>
 {
-    chess.reset()
-    updateGame()
+    if (gameRef) 
+    {
+        await updateGame(null, true);
+        chess.reset();
+    }
+    else 
+    {
+        chess.reset();
+        updateGame();
+    }
 }
 
 export const handleMove = (from: SquareType, to: SquareType) => 
@@ -31,44 +119,79 @@ export const handleMove = (from: SquareType, to: SquareType) =>
     const promotions = chess.moves({ verbose: true }).filter((m: Move) => m.promotion);
     // console.table(promotions);
 
+    let pendingPromotion: PromotionType = null;
+
     if (promotions.some((m: Move) => `${m.from}:${m.to}` === `${from}:${to}`)) 
     {
         // console.log('The User is going to promote!')
-        const pendingPromotion: PromotionType = { from, to, color: promotions[0].color };
+        pendingPromotion = { from, to, color: promotions[0].color };
         updateGame(pendingPromotion);
     }
 
-    const { pendingPromotion } = gameSubject.getValue();
+    // const { pendingPromotion } = gameSubject.getValue();
 
-    if (!pendingPromotion)
-    {
-        move(from, to);
-    }
+    if (!pendingPromotion)  move(from, to);
 }
 
 export const move = (from: SquareType, to: SquareType, promotion?: MovePromotionType) => 
 {
-    let tempMove: ShortMove = { from, to }
-    if (promotion) tempMove.promotion = promotion
+    let tempMove: ShortMove = { from, to };
+    if (promotion) tempMove.promotion = promotion;
 
-    const legalMove = chess.move(tempMove);
-    if (legalMove) updateGame();
+    // const legalMove = chess.move(tempMove);
+    // if (legalMove) updateGame();
+
+    // console.log({ tempMove, member }, chess.turn());
+
+    if (gameRef)
+    {
+        if (member.piece === chess.turn()) 
+        {
+            const legalMove = chess.move(tempMove);
+            if (legalMove) updateGame();
+        }
+    } 
+    else 
+    {
+        const legalMove = chess.move(tempMove);
+        if (legalMove) updateGame();
+    }
 }
 
-const updateGame = (pendingPromotion?: PromotionType) => 
+const updateGame = async (pendingPromotion?: PromotionType, reset?: boolean) => 
 {
     const isGameOver = chess.game_over();
 
-    const newGame: IGame = {
-        board: chess.board(),
-        pendingPromotion,
-        isGameOver,
-        turn: chess.turn(),
-        result: isGameOver ? getGameResult() : null
-    }
+    if (gameRef) 
+    {
+        const gameSnap = await getDoc(gameRef);
 
-    localStorage.setItem('SAVEDGAME', chess.fen());
-    gameSubject.next(newGame);
+        const updatedData: Pick<IGameDoc, 'gameData' | 'pendingPromotion' | 'status'> = { 
+            gameData: chess.fen(), 
+            pendingPromotion: pendingPromotion || null,
+            status: gameSnap.data()?.status
+        }
+
+        // console.log({ updateGame });
+
+        if (reset && gameSnap.data()?.members.length > 1) updatedData.status = 'over';
+
+        await updateDoc(gameRef, updatedData);
+    } 
+    else 
+    {
+        const newGame = {
+            board: chess.board(),
+            pendingPromotion,
+            isGameOver,
+            position: chess.turn(),
+            result: isGameOver ? getGameResult() : null
+        }
+
+        localStorage.setItem('SAVEDGAME', chess.fen());
+
+        if (gameSubject instanceof BehaviorSubject) gameSubject.next(newGame);
+    }
 }
 
 const getGameResult = () => 

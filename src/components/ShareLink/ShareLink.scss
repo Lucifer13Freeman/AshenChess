@@ -1,0 +1,29 @@
+.share_game_opened 
+{
+    max-height: 175px;
+    width: 420px;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.share_game_closed 
+{
+    max-height: 40px;
+    width: 420px;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+@layer components {
+    .share_game {
+        @apply 
+            absolute
+            bottom-0
+            left-0
+            z-10
+            p-2
+            pb-3
+            bg-slate-500
+            rounded-t-xl
+    }
+}

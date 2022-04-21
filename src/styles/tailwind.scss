@@ -1,0 +1,19 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import '../index.scss';
+@import '../App.scss';
+@import '../pages/home/HomePage.scss';
+@import '../pages/game/GamePage.scss';
+@import '../pages/auth/AuthPage.scss';
+
+@import '../layout/GameNavbar.scss';
+@import '../UI/Button/Button.scss';
+@import '../UI/Modal/Modal.scss';
+@import '../components/Board/Board.scss';
+@import '../components/ShareLink/ShareLink.scss';
+@import '../components/User/UserForm.scss';
+@import '../UI/Spinner/Spinner.scss';
+@import '../components/Loader/Loader.scss';
+@import '../pages/error/ErrorPage.scss';

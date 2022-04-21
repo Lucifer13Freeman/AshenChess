@@ -1,4 +1,5 @@
 import { PieceType, Square } from "chess.js";
+import { DocumentData, DocumentReference, DocumentSnapshot } from "firebase/firestore";
 
 
 export enum PLAYERS
@@ -35,7 +36,7 @@ export const PROMOTION_PIECES = ['r', 'n', 'b', 'q'];
 
 export type PositionXYType = { x: number; y: number; };
 export type MovePromotionType = 'b' | 'n' | 'r' | 'q' | undefined;
-export type FullPieceType = { type: PieceType; color: ColorType; };
+export type FullPieceType = { type: PieceType; color: PositionType; };
 export type BoardType = (FullPieceType | null)[][];
 export type SquareType = Square;
 
@@ -53,7 +54,6 @@ export interface IGame
 {
     board?: BoardType;
     pendingPromotion?: PromotionType;
-    turn?: ColorType;
     isGameOver?: boolean;
     result?: string | null;
 }
@@ -63,3 +63,38 @@ export const EXAMPLE = 'rnb2bnr/pppPkppp/8/4p3/7q/8/PPPP1PPP/RNBQKBNR w KQ - 1 5
 export const STALEMATE = '4k3/4P3/4K3/8/8/8/8/8 b - - 0 78';
 export const CHECKMATE = 'rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3';
 export const INSUFICCIEN_MATERIAL = 'k7/8/n7/8/8/8/8/7K b - - 0 1';
+
+
+export interface INewGameOptions
+{
+  label?: 'Black pieces' | 'White pieces' | 'Random';
+  value?: 'w' | 'b' | 'r';
+}
+
+export type NewGameOptionsType = Pick<INewGameOptions, 'value'>;
+
+export interface IMember 
+{
+    uid: string;
+    piece: PositionType;
+    name?: string;
+    creator: boolean;
+}
+
+export interface IGameDoc extends IGame
+{
+    gameId?: string;
+    status?: StatusType;
+    members?: IMember[];
+    position?: PositionType;
+    member?: IMember;
+    oponent?: IMember;
+    gameData?: string;
+}
+
+export type PositionType = 'w' | 'b';
+export type StatusType = 'waiting' | 'ready' | 'over';
+export type InitResultType = 'notfound' | 'intruder' | undefined | null;
+
+export type GameDocRefType = DocumentReference<IGameDoc | DocumentData>;
+export type GameDocSnapType = DocumentSnapshot<IGameDoc | DocumentData>;

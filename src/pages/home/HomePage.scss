@@ -1,0 +1,13 @@
+@layer components {
+    .home_page {
+        @apply
+            min-h-screen
+    }
+
+    .home_columns {
+        @apply
+            flex
+            justify-center
+            items-center
+    }
+}

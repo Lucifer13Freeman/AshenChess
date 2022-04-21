@@ -13,9 +13,9 @@ import Promote from "./Promote";
 
 interface IBoardSquareProps
 {
-    piece: FullPieceType | null;
-    isBlack: boolean;
-    position: string;
+  piece: FullPieceType | null;
+  isBlack: boolean;
+  position: string;
 }
 
 const BoardSquare: React.FC<IBoardSquareProps> = ({ piece, isBlack, position }) => 
@@ -33,26 +33,26 @@ const BoardSquare: React.FC<IBoardSquareProps> = ({ piece, isBlack, position }) 
 
   useEffect(() => 
   {
-    const subs = gameSubject.subscribe(
+    const subs = gameSubject?.subscribe(
       ({ pendingPromotion }) =>
         pendingPromotion && pendingPromotion.to === position
           ? setPromotion(pendingPromotion)
           : setPromotion(null)
     );
 
-    return () => subs.unsubscribe();
-  }, [position])
+    return () => subs?.unsubscribe();
+  }, [position]);
 
   
   return (
     <div className={'board_square'} ref={drop}>
-        <Square isBlack={isBlack}>
-          { promotion ? 
-          ( <Promote promotion={promotion}/> ) 
-          : piece ? 
+      <Square isBlack={isBlack}>
+        {promotion ? 
+          (<Promote promotion={promotion}/>) 
+        : piece ? 
           <Piece piece={piece} position={position}/> 
-          : null }
-        </Square>
+        : null}
+      </Square>
     </div>
   )
 }

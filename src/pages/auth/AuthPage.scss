@@ -1,0 +1,10 @@
+@layer components {
+    .auth_page {
+        @apply
+            min-h-screen
+            flex
+            items-center
+            justify-center
+            bg-slate-500
+    }
+}

@@ -13,15 +13,16 @@ const Piece: React.FC<IPieceProps> = ({ piece: { type, color }, position }) =>
   const piece_name = `${type}${DRAG_PIECE_SEPARATOR}${color}`;
   const pieceImg = require(`../../assets/images/${piece_name}.png`);
 
-  const [{ isDraging }, drag, preview] = useDrag({
-      type: DRAG_TYPE_PIECE,
-      item: { 
-        type: DRAG_TYPE_PIECE, 
-        id: `${position}${DRAG_PIECE_SEPARATOR}${piece_name}` 
-      },
-      collect: (monitor: DragSourceMonitor) => {
-        return { isDraging: !!monitor.isDragging() }
-      }
+  const [{ isDraging }, drag, preview] = useDrag(
+  {
+    type: DRAG_TYPE_PIECE,
+    item: { 
+      type: DRAG_TYPE_PIECE, 
+      id: `${position}${DRAG_PIECE_SEPARATOR}${piece_name}` 
+    },
+    collect: (monitor: DragSourceMonitor) => {
+      return {isDraging: !!monitor.isDragging()}
+    }
   });
 
 

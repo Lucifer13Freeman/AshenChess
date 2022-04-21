@@ -11,14 +11,18 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "chess.js": "^0.13.0",
+    "firebase": "^9.6.10",
+    "node-sass": "^7.0.1",
     "react": "^18.0.0",
     "react-dnd": "^16.0.0",
     "react-dnd-html5-backend": "^16.0.0",
     "react-dnd-touch-backend": "^16.0.0",
     "react-dom": "^18.0.0",
+    "react-firebase-hooks": "^5.0.3",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "rxfire": "^6.0.3",
     "rxjs": "^7.5.5",
-    "sass": "^1.50.0",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -26,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:tailwind": "postcss src/styles/tailwind.scss -o src/styles/index.css"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +52,11 @@
     ]
   },
   "devDependencies": {
-    "@types/chess.js": "^0.11.2"
+    "@types/chess.js": "^0.11.2",
+    "autoprefixer": "^10.4.4",
+    "postcss": "^8.4.12",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.1.0",
+    "tailwindcss": "^3.0.23"
   }
 }
