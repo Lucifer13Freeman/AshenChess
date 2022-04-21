@@ -16,8 +16,8 @@ const GameNavbar: React.FC<INavbarProps> = (
     return (
         <>
         {isGameOver ? (
-            <h2 className='vertical_text text-slate-200'>
-                <span>GAME OVER</span>
+            <h2 className='vertical_text text-slate-200 flex items-center'>
+                <span className='mb-4'>GAME OVER</span>
                 <div>
                     <Button onClick={resetGame} color='light'>
                         <span className='vertical_text'>NEW GAME</span>
@@ -26,7 +26,7 @@ const GameNavbar: React.FC<INavbarProps> = (
             </h2>
         ) : (
             <h2 className='vertical_text'>
-                <Button onClick={resetGame} color='light' className='ml-2'>
+                <Button onClick={resetGame} color='light'>
                     <span className='vertical_text'>RESTART GAME</span>
                 </Button>
             </h2>
