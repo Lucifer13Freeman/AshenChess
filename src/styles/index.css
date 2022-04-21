@@ -967,14 +967,14 @@ code
 .share_game_opened 
 {
     max-height: 175px;
-    width: 420px;
+    width: 300px;
     transition: 0.5s;
     overflow: hidden;
 }
 .share_game_closed 
 {
     max-height: 40px;
-    width: 420px;
+    width: 300px;
     transition: 0.5s;
     overflow: hidden;
 }
