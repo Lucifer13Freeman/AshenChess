@@ -414,7 +414,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 .app {
   min-height: 100vh;
   --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 .home_page {
   min-height: 100vh;
@@ -426,11 +426,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .game_page {
   display: flex;
-  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+  overflow: auto;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 .auth_page {
   display: flex;
@@ -889,8 +889,26 @@ code
 }
 .board_container
 {
-    width: 500px;
-    height: 500px;
+    min-width: 300px;
+    min-height: 300px;
+    width: 300px;
+    height: 300px;
+}
+@media screen and (min-width: 480px) 
+{
+    .board_container
+    {
+        width: 400px;
+        height: 400px;
+    }
+}
+@media screen and (min-width: 550px) 
+{
+    .board_container
+    {
+        width: 500px;
+        height: 500px;
+    }
 }
 .board 
 {
