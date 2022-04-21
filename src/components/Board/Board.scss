@@ -1,8 +1,7 @@
-
 .board_container
 {
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
 }
 
 .board 
@@ -24,7 +23,7 @@
     width: 12.5%;
     height: 12.5%;
 
-    .square_black
+    /*.square_black
     {
         background-color: chocolate;
     }
@@ -32,18 +31,13 @@
     .square_white
     {
         background-color: burlywood;
-    }
+    }*/
 }
 
 .promote_square
 {
     width: 50%;
     height: 50%;
-}
-
-.cursor_pointer
-{
-    cursor: pointer;
 }
 
 .piece_container
@@ -60,4 +54,50 @@
 {
     max-width: 70%;
     max-height: 70%;
+}
+
+@layer components {
+    .member_tag
+    {
+        @apply 
+            text-xs 
+            inline-flex 
+            items-center
+            float-right 
+            font-bold 
+            uppercase 
+            px-3 
+            py-1 
+            bg-blue-200 
+            text-blue-700 
+            rounded
+    }
+
+    .oponent_tag
+    {
+        @apply 
+            text-xs 
+            inline-flex 
+            items-center 
+            float-right
+            font-bold 
+            uppercase 
+            px-3 
+            py-1 
+            bg-red-200 
+            text-red-700 
+            rounded
+    }
+
+    .square_black
+    {
+        @apply
+            bg-slate-600
+    }
+
+    .square_white
+    {
+        @apply
+            bg-slate-300
+    }
 }

@@ -1,0 +1,57 @@
+@layer components {
+    .btn_dark {
+        @apply 
+            p-2.5 
+            text-sm
+            font-semibold 
+            rounded-lg 
+            shadow-md 
+
+            bg-slate-700 
+            text-slate-300 
+
+            hover:bg-slate-400
+            hover:text-slate-600
+
+            focus:ring-opacity-75
+            focus:shadow-lg 
+            focus:outline-none 
+            focus:ring-0 
+            focus:ring-slate-400 
+
+            active:bg-slate-800 
+            active:shadow-lg 
+            active:text-slate-300
+
+            transition duration-150 
+            ease-in-out
+    }
+
+    .btn_light {
+        @apply 
+            p-2.5
+            text-sm
+            font-semibold 
+            rounded-lg 
+            shadow-md 
+
+            bg-slate-400 
+            text-slate-800 
+
+            hover:bg-slate-700
+            hover:text-slate-300
+
+            focus:ring-opacity-75
+            focus:shadow-lg 
+            focus:outline-none 
+            focus:ring-0 
+            focus:ring-slate-400 
+
+            active:bg-slate-500 
+            active:shadow-lg 
+            active:text-slate-800
+
+            transition duration-150 
+            ease-in-out
+    }
+}

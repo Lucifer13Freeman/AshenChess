@@ -1,36 +1,38 @@
 import { BoardType, 
-        ColorType, 
         FullPieceType, 
+        IMember, 
         LETTERS, 
+        PositionType, 
         PositionXYType } from '../../game/types';
 import BoardSquare from './BoardSquare';
 import { useEffect, useState } from 'react';
-import './Board.scss';
 
 
 interface IBoardProps
 {
   board: BoardType;
-  turn?: ColorType;
+  position?: PositionType;
+  member?: IMember;
+  oponent?: IMember;
 }
 
-const Board: React.FC<IBoardProps> = ({ board, turn }) => 
+const Board: React.FC<IBoardProps> = ({ board, position, member, oponent }) => 
 {
   const [currBoard, setCurrBoard] = useState<(FullPieceType | null)[]>([]);
 
   useEffect(() => {
     setCurrBoard(
-      turn === 'w' ? board.flat() : board.flat().reverse()
+      position === 'w' ? board.flat() : board.flat().reverse()
     );
-  }, [board, turn]);
+  }, [board, position]);
 
   const getPositionXY = (index: number): PositionXYType =>
   {
     // const x = index % 8;
     // const y = Math.abs(Math.floor(index / 8) - 7);
 
-    const x = turn === 'w' ? index % 8 : Math.abs((index % 8) - 7);
-    const y = turn === 'w'
+    const x = position === 'w' ? index % 8 : Math.abs((index % 8) - 7);
+    const y = position === 'w'
                 ? Math.abs(Math.floor(index / 8) - 7)
                 : Math.floor(index / 8);
     return { x, y };
@@ -52,6 +54,7 @@ const Board: React.FC<IBoardProps> = ({ board, turn }) =>
 
   return (
     <div className='board_container'>
+      {oponent && oponent.name && <span className='oponent_tag'>{oponent.name}</span>}
       <div className='board'>
         {currBoard.map((piece, index) => 
         (
@@ -64,6 +67,7 @@ const Board: React.FC<IBoardProps> = ({ board, turn }) =>
           </div>
         ))}
       </div>
+      {member && member.name && <span className='member_tag'>{member.name}</span>}
     </div>
   )
 }

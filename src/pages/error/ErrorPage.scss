@@ -1,0 +1,18 @@
+
+@layer components {
+    .error_page {
+        @apply
+            bg-slate-700
+            flex
+            items-center
+            justify-center
+            min-h-screen
+    }
+
+    .error_text {
+        @apply
+            text-slate-400
+            text-3xl
+            text
+    }
+}
