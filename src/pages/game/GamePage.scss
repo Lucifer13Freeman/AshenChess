@@ -8,3 +8,13 @@
       py-5
   }
 }
+
+.game_page
+{
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar
+  {
+    display: none;
+  }
+}

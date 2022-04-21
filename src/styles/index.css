@@ -413,7 +413,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .app {
   min-height: 100vh;
-  min-width: 24rem;
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
@@ -883,6 +882,14 @@ code
   justify-content: center;
   background-color: #202020;
 }*/
+.game_page
+{
+  scrollbar-width: none;
+}
+.game_page::-webkit-scrollbar
+  {
+    display: none;
+  }
 .vertical_text 
 {
   text-orientation: upright;
