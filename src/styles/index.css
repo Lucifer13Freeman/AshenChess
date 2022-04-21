@@ -636,7 +636,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 .share_game {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   left: 0px;
   z-index: 10;
