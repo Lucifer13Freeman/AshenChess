@@ -10,6 +10,11 @@ Stack:
 * chess.js
 * react-dnd
 * SCSS
+* Tailwind
+
+Command to build CSS:
+
+### `yarn build:css`
 
 # Getting Started with Create React App
 
