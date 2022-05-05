@@ -28,9 +28,6 @@ const Board: React.FC<IBoardProps> = ({ board, position, member, oponent }) =>
 
   const getPositionXY = (index: number): PositionXYType =>
   {
-    // const x = index % 8;
-    // const y = Math.abs(Math.floor(index / 8) - 7);
-
     const x = position === 'w' ? index % 8 : Math.abs((index % 8) - 7);
     const y = position === 'w'
                 ? Math.abs(Math.floor(index / 8) - 7)

@@ -86,8 +86,6 @@ const GamePage: React.FC = () =>
   if (initResult === 'notfound') return <ErrorPage text='Game not found'/>;
   if (initResult === 'intruder') return <ErrorPage text='The game is already full'/>;
   
-  // console.log(status)
-  
   return (
     <div className='game_page'>
       {loading ? <Loader/> 
