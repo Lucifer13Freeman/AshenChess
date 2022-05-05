@@ -44,13 +44,6 @@ const HomePage: React.FC = () =>
     navigate(`/game/${game.gameId}`);
   }
 
-  // const config = JSON.parse(
-  //   '{"apiKey":"AIzaSyAao54V87Lgu6QZVjA3-FhrN4sPVPq0Kfk","authDomain":"ashen-chess.firebaseapp.com","projectId":"ashen-chess","storageBucket":"ashen-chess.appspot.com","messagingSenderId":"777576568095","appId":"1:777576568095:web:392bab570bd8b877890c2a"}');
-
-  
-  // console.log(JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG as string))
-
-
   return (
     <>
       <div className='home_page grid grid-cols-2 justify-evenly'>
