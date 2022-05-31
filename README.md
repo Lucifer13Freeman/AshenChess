@@ -1,6 +1,6 @@
 # ReactChess
 
-A simple chess game
+A simple chess game with multiplayer: https://ashen-chess.netlify.app
 
 Stack: 
 
